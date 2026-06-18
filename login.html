@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zakro Academy | Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--primary:#0a6cff;--primary-dark:#0050cc;--cyan:#00c8e0;--dark:#0d1b2e;--dark-2:#1a2d45;--success:#10b981;--danger:#ef4444;--warning:#f59e0b;--font-display:'Syne',sans-serif;--font-body:'DM Sans',sans-serif;--transition:0.32s cubic-bezier(0.4,0,0.2,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-body);background:var(--dark);color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.bg-mesh{position:fixed;inset:0;background:radial-gradient(ellipse 70% 70% at 20% 40%,rgba(10,108,255,0.18),transparent 60%),radial-gradient(ellipse 50% 50% at 80% 20%,rgba(0,200,224,0.14),transparent 60%)}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.035) 1px,transparent 1px);background-size:60px 60px}
+.orb{position:fixed;border-radius:50%;filter:blur(90px);animation:float 10s ease-in-out infinite}
+.orb-1{width:420px;height:420px;background:rgba(10,108,255,0.2);top:-120px;right:-80px}
+.orb-2{width:300px;height:300px;background:rgba(0,200,224,0.15);bottom:-60px;left:5%;animation-delay:-4s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-28px)}}
+.wrap{position:relative;z-index:1;width:100%;max-width:450px;padding:20px}
+.logo-section{text-align:center;margin-bottom:28px}
+.logo-icon{width:90px;height:90px;background:transparent;border-radius:16px;display:flex;align-items:top;justify-content:top;font-family:var(--font-display);font-size:24px;font-weight:200;color:#fff;margin:0 auto 12px;box-shadow:0 8px 32px rgba(10,108,255,0.45)}
+.logo-name{font-family:var(--font-display);font-size:26px;font-weight:800;background:linear-gradient(135deg,#fff 40%,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.role-tabs{display:flex;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:4px;margin-bottom:24px;gap:4px}
+.role-tab{flex:1;padding:10px;border-radius:10px;border:none;background:transparent;color:rgba(255,255,255,0.45);font-family:var(--font-display);font-size:13px;font-weight:700;cursor:pointer;transition:all var(--transition);display:flex;align-items:center;justify-content:center;gap:7px}
+.role-tab.active.admin{background:linear-gradient(135deg,var(--primary),#0050cc);color:#fff;box-shadow:0 4px 16px rgba(10,108,255,0.4)}
+.role-tab.active.student{background:linear-gradient(135deg,#7c3aed,var(--cyan));color:#fff;box-shadow:0 4px 16px rgba(124,58,237,0.4)}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:22px;padding:32px 28px;backdrop-filter:blur(10px)}
+.card-title{font-family:var(--font-display);font-size:20px;font-weight:800;margin-bottom:4px}
+.card-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:22px}
+.demo-badge{display:flex;align-items:flex-start;gap:8px;background:rgba(10,108,255,0.1);border:1px solid rgba(10,108,255,0.22);border-radius:10px;padding:10px 13px;margin-bottom:18px;font-size:12px;color:rgba(255,255,255,0.5);line-height:1.7}
+.demo-badge strong{color:#7ab3ff}
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:7px}
+.input-wrap{position:relative}
+.input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px;color:rgba(255,255,255,0.3);pointer-events:none}
+.input-toggle{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:13px;cursor:pointer;background:none;border:none;color:rgba(255,255,255,0.3);transition:color var(--transition)}
+.input-toggle:hover{color:rgba(255,255,255,0.7)}
+.form-input{width:100%;padding:12px 40px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:11px;color:#fff;font-size:14px;font-family:var(--font-body);outline:none;transition:all var(--transition)}
+.form-input::placeholder{color:rgba(255,255,255,0.22)}
+.form-input:focus{border-color:rgba(10,108,255,0.6);background:rgba(10,108,255,0.08);box-shadow:0 0 0 3px rgba(10,108,255,0.15)}
+.form-input.is-error{border-color:rgba(239,68,68,0.6) !important}
+.form-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.remember{display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,0.45);cursor:pointer}
+.remember input{accent-color:var(--primary);width:14px;height:14px}
+.link-btn{font-size:13px;color:rgba(122,179,255,0.8);cursor:pointer;transition:color var(--transition);background:none;border:none;font-family:var(--font-body);padding:0}
+.link-btn:hover{color:var(--cyan)}
+.msg-box{padding:11px 14px;border-radius:10px;font-size:13px;margin-bottom:14px;display:none;align-items:center;gap:9px}
+.msg-box.show{display:flex}
+.msg-error{background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.28);color:#fca5a5}
+.msg-success{background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.28);color:#6ee7b7}
+.btn-login{width:100%;padding:13px;border-radius:12px;border:none;font-family:var(--font-display);font-size:15px;font-weight:700;color:#fff;cursor:pointer;transition:all var(--transition);display:flex;align-items:center;justify-content:center;gap:9px}
+.btn-login.admin-color{background:linear-gradient(135deg,var(--primary),var(--primary-dark));box-shadow:0 6px 24px rgba(10,108,255,0.4)}
+.btn-login.student-color{background:linear-gradient(135deg,#7c3aed,var(--cyan));box-shadow:0 6px 24px rgba(124,58,237,0.4)}
+.btn-login:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.btn-login:disabled{opacity:0.6;cursor:not-allowed;transform:none !important}
+.screen{display:none}
+.screen.active{display:block;animation:fadeUp 0.28s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.back-btn{display:flex;align-items:center;gap:6px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:13px;cursor:pointer;font-family:var(--font-body);margin-bottom:18px;padding:0;transition:color var(--transition)}
+.back-btn:hover{color:rgba(255,255,255,0.8)}
+.strength-bar{display:flex;gap:4px;margin-top:7px}
+.strength-seg{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,0.1);transition:background 0.3s}
+.strength-label{font-size:11px;margin-top:5px;color:rgba(255,255,255,0.35)}
+.note-text{font-size:12px;color:rgba(255,255,255,0.3);margin-top:14px;text-align:center;line-height:1.7}
+.site-link{text-align:center;margin-top:18px;font-size:13px;color:rgba(255,255,255,0.3)}
+.site-link a{color:rgba(122,179,255,0.7);text-decoration:none}
+.site-link a:hover{color:var(--cyan)}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<div class="wrap">
+  <div class="logo-section">
+    <div class="logo-icon"><img src="logoo.png"></div>
+    <div class="logo-name">Zakro Academy</div>
+  </div>
+
+  <div class="role-tabs">
+    <button class="role-tab admin active" id="tab-admin" onclick="switchRole('admin')"><i class="fas fa-user-shield"></i> Admin</button>
+    <button class="role-tab student" id="tab-student" onclick="switchRole('student')"><i class="fas fa-user-graduate"></i> Student</button>
+  </div>
+
+  <!-- LOGIN -->
+  <div class="screen active" id="screen-login">
+    <div class="card">
+      <div class="card-title" id="login-title">Admin Login</div>
+      <div class="card-sub" id="login-sub">Sign in to manage your academy</div>
+      
+      <div class="msg-box msg-error" id="login-error"><i class="fas fa-exclamation-circle"></i><span id="login-err-msg">Invalid credentials</span></div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <div class="input-wrap">
+          <i class="input-icon fas fa-envelope"></i>
+          <input class="form-input" type="email" id="login-email" placeholder="Enter your email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="input-wrap">
+          <i class="input-icon fas fa-lock"></i>
+          <input class="form-input" type="password" id="login-password" placeholder="Enter your password">
+          <button class="input-toggle" onclick="togglePwd('login-password',this)" tabindex="-1"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="remember"><input type="checkbox" id="rememberMe"> Remember me</label>
+        <button class="link-btn" onclick="showScreen('screen-forgot')">Forgot password?</button>
+      </div>
+      <button class="btn-login admin-color" id="login-btn" onclick="doLogin()">
+        <i class="fas fa-sign-in-alt"></i> <span id="login-btn-text">Sign In</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- FORGOT -->
+  <div class="screen" id="screen-forgot">
+    <div class="card">
+      <button class="back-btn" onclick="showScreen('screen-login')"><i class="fas fa-arrow-left"></i> Back to Login</button>
+      <div class="card-title">Forgot Password</div>
+      <div class="card-sub">Enter your registered email to verify and reset</div>
+      <div class="msg-box msg-error" id="forgot-error"><i class="fas fa-exclamation-circle"></i><span id="forgot-err-msg"></span></div>
+      <div class="msg-box msg-success" id="forgot-ok"><i class="fas fa-check-circle"></i><span id="forgot-ok-msg"></span></div>
+      <div class="form-group">
+        <label class="form-label">Registered Email</label>
+        <div class="input-wrap">
+          <i class="input-icon fas fa-envelope"></i>
+          <input class="form-input" type="email" id="forgot-email" placeholder="your@email.com">
+        </div>
+      </div>
+      <button class="btn-login admin-color" id="forgot-btn" onclick="doForgot()">
+        <i class="fas fa-paper-plane"></i> Verify Email
+      </button>
+    </div>
+  </div>
+
+  <!-- RESET -->
+  <div class="screen" id="screen-reset">
+    <div class="card">
+      <button class="back-btn" onclick="showScreen('screen-login')"><i class="fas fa-arrow-left"></i> Back to Login</button>
+      <div class="card-title">Reset Password</div>
+      <div class="card-sub">Create a strong new password for your account</div>
+      <div class="msg-box msg-error" id="reset-error"><i class="fas fa-exclamation-circle"></i><span id="reset-err-msg"></span></div>
+      <div class="form-group">
+        <label class="form-label">New Password</label>
+        <div class="input-wrap">
+          <i class="input-icon fas fa-lock"></i>
+          <input class="form-input" type="password" id="reset-new" placeholder="New password" oninput="checkStrength(this.value)">
+          <button class="input-toggle" onclick="togglePwd('reset-new',this)" tabindex="-1"><i class="fas fa-eye"></i></button>
+        </div>
+        <div class="strength-bar"><div class="strength-seg" id="rs1"></div><div class="strength-seg" id="rs2"></div><div class="strength-seg" id="rs3"></div><div class="strength-seg" id="rs4"></div></div>
+        <div class="strength-label" id="r-strength-label"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <div class="input-wrap">
+          <i class="input-icon fas fa-lock"></i>
+          <input class="form-input" type="password" id="reset-confirm" placeholder="Repeat new password">
+          <button class="input-toggle" onclick="togglePwd('reset-confirm',this)" tabindex="-1"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+      <button class="btn-login admin-color" onclick="doReset()"><i class="fas fa-save"></i> Save New Password</button>
+    </div>
+  </div>
+
+  <!-- FORCE CHANGE (first login) -->
+  <div class="screen" id="screen-change">
+    <div class="card">
+      <div class="card-title">🔐 Set New Password</div>
+      <div class="card-sub">You must change your default password before continuing</div>
+      <div class="msg-box msg-error" id="change-error"><i class="fas fa-exclamation-circle"></i><span id="change-err-msg"></span></div>
+      <div class="form-group">
+        <label class="form-label">Current Password</label>
+        <div class="input-wrap">
+          <i class="input-icon fas fa-lock"></i>
+          <input class="form-input" type="password" id="change-current" placeholder="Your current password">
+          <button class="input-toggle" onclick="togglePwd('change-current',this)" tabindex="-1"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">New Password</label>
+        <div class="input-wrap">
+          <i class="input-icon fas fa-lock"></i>
+          <input class="form-input" type="password" id="change-new" placeholder="Min 6 characters" oninput="checkStrength(this.value)">
+          <button class="input-toggle" onclick="togglePwd('change-new',this)" tabindex="-1"><i class="fas fa-eye"></i></button>
+        </div>
+        <div class="strength-bar"><div class="strength-seg" id="rs1"></div><div class="strength-seg" id="rs2"></div><div class="strength-seg" id="rs3"></div><div class="strength-seg" id="rs4"></div></div>
+        <div class="strength-label" id="r-strength-label"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirm New Password</label>
+        <div class="input-wrap">
+          <i class="input-icon fas fa-lock"></i>
+          <input class="form-input" type="password" id="change-confirm" placeholder="Repeat new password">
+          <button class="input-toggle" onclick="togglePwd('change-confirm',this)" tabindex="-1"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+      <button class="btn-login admin-color" id="change-btn" onclick="doChangePassword()"><i class="fas fa-save"></i> Save &amp; Continue</button>
+      <p class="note-text">After changing, you will use your new password every time you log in.</p>
+    </div>
+  </div>
+
+  <div class="site-link"><a href="index.html"><i class="fas fa-arrow-left"></i> Back to Website</a></div>
+</div>
+
+<script>
+// ── Initialize credentials in localStorage if not set ──
+function initCreds() {
+  if (!localStorage.getItem('za_admin_creds')) {
+    localStorage.setItem('za_admin_creds', JSON.stringify({email:'admin@mail.com',password:'admin1234',mustChange:true}));
+  }
+  if (!localStorage.getItem('za_student_creds')) {
+    localStorage.setItem('za_student_creds', JSON.stringify({email:'student@mail.com',password:'student1234',mustChange:true}));
+  }
+}
+initCreds();
+
+let currentRole = 'admin';
+let resetRole = '';
+
+function switchRole(role) {
+  currentRole = role;
+  ['admin','student'].forEach(r => {
+    document.getElementById('tab-'+r).classList.toggle('active', r===role);
+  });
+  const isAdmin = role === 'admin';
+  document.getElementById('login-title').textContent = isAdmin ? 'Admin Login' : 'Student Login';
+  document.getElementById('login-sub').textContent = isAdmin ? 'Sign in to manage your academy' : 'Sign in to access your dashboard';
+  document.getElementById('demo-id').textContent = isAdmin ? '160922737001' : '160920737001';
+  document.getElementById('demo-pass').textContent = isAdmin ? 'admin1234' : 'student1234';
+  document.getElementById('login-btn').className = 'btn-login ' + (isAdmin ? 'admin-color' : 'student-color');
+  hideMsg('login-error');
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function togglePwd(id, btn) {
+  const inp = document.getElementById(id);
+  const hide = inp.type === 'password';
+  inp.type = hide ? 'text' : 'password';
+  btn.innerHTML = hide ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+}
+
+function showMsg(id, msg) {
+  const el = document.getElementById(id);
+  el.classList.add('show');
+  const sp = el.querySelector('span');
+  if (sp) sp.textContent = msg;
+}
+function hideMsg(id) { document.getElementById(id).classList.remove('show'); }
+
+function checkStrength(val) {
+  const ids = ['rs1','rs2','rs3','rs4'];
+  const labelId = 'r-strength-label';
+  const segs = ids.map(i => document.getElementById(i)).filter(Boolean);
+  const label = document.getElementById(labelId);
+  if (!segs.length) return;
+  let score = 0;
+  if (val.length >= 6) score++;
+  if (val.length >= 10) score++;
+  if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
+  if (/[0-9!@#$%^&*]/.test(val)) score++;
+  const colors = ['#ef4444','#f59e0b','#3b82f6','#10b981'];
+  const labs = ['Weak','Fair','Good','Strong'];
+  segs.forEach((s,i) => s.style.background = i < score ? colors[score-1] : 'rgba(255,255,255,0.1)');
+  if (label) { label.textContent = score>0 ? labs[score-1] : ''; label.style.color = score>0 ? colors[score-1] : ''; }
+}
+
+// ── LOGIN ──
+function doLogin() {
+  hideMsg('login-error');
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-password').value;
+  if (!email || !pass) { showMsg('login-error','Please fill in all fields.'); return; }
+
+  const key = 'za_' + currentRole + '_creds';
+  const creds = JSON.parse(localStorage.getItem(key));
+  if (email !== creds.email || pass !== creds.password) {
+    showMsg('login-error','Incorrect email or password.');
+    document.getElementById('login-email').classList.add('is-error');
+    document.getElementById('login-password').classList.add('is-error');
+    return;
+  }
+  document.getElementById('login-email').classList.remove('is-error');
+  document.getElementById('login-password').classList.remove('is-error');
+
+  if (creds.mustChange) {
+    document.getElementById('change-btn').className = 'btn-login ' + (currentRole==='admin' ? 'admin-color' : 'student-color');
+    showScreen('screen-change');
+    return;
+  }
+
+  sessionStorage.setItem('za_role', currentRole);
+  sessionStorage.setItem('za_logged_in', '1');
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in…';
+  setTimeout(() => {
+    window.location.href = currentRole === 'admin' ? 'admin-panel.html' : 'student-panel.html';
+  }, 900);
+}
+
+// ── FORGOT ──
+function doForgot() {
+  hideMsg('forgot-error'); hideMsg('forgot-ok');
+  const email = document.getElementById('forgot-email').value.trim();
+  if (!email) { showMsg('forgot-error','Please enter your email.'); return; }
+  const a = JSON.parse(localStorage.getItem('za_admin_creds'));
+  const s = JSON.parse(localStorage.getItem('za_student_creds'));
+  if (email === a.email) { resetRole = 'admin'; }
+  else if (email === s.email) { resetRole = 'student'; }
+  else { showMsg('forgot-error','No account found with this email.'); return; }
+  showMsg('forgot-ok','Email verified! Proceed to set a new password.');
+  const btn = document.getElementById('forgot-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-check"></i> Verified';
+  setTimeout(() => { showScreen('screen-reset'); btn.disabled=false; btn.innerHTML='<i class="fas fa-paper-plane"></i> Verify Email'; }, 1200);
+}
+
+// ── RESET ──
+function doReset() {
+  hideMsg('reset-error');
+  const np = document.getElementById('reset-new').value;
+  const cp = document.getElementById('reset-confirm').value;
+  if (np.length < 6) { showMsg('reset-error','Password must be at least 6 characters.'); return; }
+  if (np !== cp) { showMsg('reset-error','Passwords do not match.'); return; }
+  const key = 'za_' + resetRole + '_creds';
+  const creds = JSON.parse(localStorage.getItem(key));
+  creds.password = np; creds.mustChange = false;
+  localStorage.setItem(key, JSON.stringify(creds));
+  alert('Password reset successfully! Please log in with your new password.');
+  document.getElementById('reset-new').value = '';
+  document.getElementById('reset-confirm').value = '';
+  showScreen('screen-login');
+}
+
+// ── FORCE CHANGE ──
+function doChangePassword() {
+  hideMsg('change-error');
+  const cur = document.getElementById('change-current').value;
+  const np  = document.getElementById('change-new').value;
+  const cp  = document.getElementById('change-confirm').value;
+  const key = 'za_' + currentRole + '_creds';
+  const creds = JSON.parse(localStorage.getItem(key));
+  if (cur !== creds.password) { showMsg('change-error','Current password is incorrect.'); return; }
+  if (np.length < 6) { showMsg('change-error','New password must be at least 6 characters.'); return; }
+  if (np === cur) { showMsg('change-error','New password must be different from current.'); return; }
+  if (np !== cp) { showMsg('change-error','Passwords do not match.'); return; }
+  creds.password = np; creds.mustChange = false;
+  localStorage.setItem(key, JSON.stringify(creds));
+  sessionStorage.setItem('za_role', currentRole);
+  sessionStorage.setItem('za_logged_in', '1');
+  alert('Password changed! Redirecting to your dashboard…');
+  window.location.href = currentRole === 'admin' ? 'admin-panel.html' : 'student-panel.html';
+}
+
+// Enter key
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const a = document.querySelector('.screen.active');
+  if (!a) return;
+  if (a.id === 'screen-login') doLogin();
+  else if (a.id === 'screen-forgot') doForgot();
+  else if (a.id === 'screen-reset') doReset();
+  else if (a.id === 'screen-change') doChangePassword();
+});
+</script>
+</body>
+</html>
